@@ -6,6 +6,17 @@ import { nanoid } from 'nanoid';
 import { Form, Label } from './ContactForm.styled';
 
 export default class ContactForm extends Component {
+  static propTypes = {
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+    onSubmitForm: PropTypes.func.isRequired,
+  };
+
   state = {
     name: '',
     number: '',
@@ -22,10 +33,9 @@ export default class ContactForm extends Component {
       this.setState({ name: '', number: '' });
 
       return this.props.onSubmitForm(contact);
-    } else {
-      const message = ' is already in contacts';
-      alert(name + message);
     }
+    const message = ' is already in contacts';
+    alert(name + message);
   };
 
   handleChange = event => {
@@ -65,14 +75,3 @@ export default class ContactForm extends Component {
     );
   }
 }
-
-ContactForm.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  onSubmitForm: PropTypes.func.isRequired,
-};
